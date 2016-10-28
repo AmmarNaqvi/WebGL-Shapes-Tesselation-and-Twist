@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            Task 1
+        </title>
+    </head>
+    <body onload="main()">
+        <canvas height="512" id="webgl" width="512">
+            Please use a browser that supports "canvas"
+        </canvas>
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            attribute vec4 a_Position;
+            attribute vec4 a_Color;
+            varying vec4 colorOut;
+            uniform mat4 transformationMatrix;
+            uniform float inRotation;
+        void
+        main()
+        {
+            gl_Position = a_Position;
+            colorOut = a_Color;
+            float d = sqrt(a_Position.x * a_Position.x + a_Position.y * a_Position.y);
+            float resultRotation = d * inRotation;
+
+            gl_Position.x = a_Position.x * cos(resultRotation) - a_Position.y * sin(resultRotation);
+            gl_Position.y = a_Position.x * sin(resultRotation) + a_Position.y * cos(resultRotation);
+        }
+        </script>
+        <script id="fragment-shader" type="x-shader/x-fragment">
+            precision mediump float;
+            varying vec4 colorOut;
+        void
+        main()
+        {
+            gl_FragColor = colorOut;
+        }
+        </script>
+        <script src="lib/webgl-utils.js">
+        </script>
+        <script src="lib/webgl-debug.js">
+        </script>
+        <script src="lib/cuon-utils.js">
+        </script>
+        <script src="lib/initShaders.js">
+        </script>
+        <script src="lib/flatten.js">
+        </script>
+        <script src="lib/gl-matrix-min.js">
+        </script>
+        <script src="lib/modelVewMatrixStack.js">
+        </script>
+        <script src="lib/dat.gui.min.js">
+        </script>
+        <script src="index.js">
+        </script>
+    </body>
+</html>
